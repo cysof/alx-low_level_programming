@@ -1,33 +1,26 @@
 #include "main.h"
 
 /**
- * rot13 - Function that encodes a string using rot13.
- * @str: The string to be encoded.
- *
- * Return: A pointer to the encoded string.
+ * rot13 - Function that encodes a string using ROT13.
+ * @s: The string to be encoded.
+ * Return: The encoded string.
  */
-char *rot13(char *str)
+char *rot13(char *s)
 {
-	char *start = str;
-	char *rot13_table_lower = "abcdefghijklmnopqrstuvwxyz";
-	char *rot13_table_upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	char *input = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	char *output = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+	int i, j;
 
-	while (*str)
+	for (i = 0; s[i]; i++)
 	{
-		char *rot13_table;
-
-		if ((*str >= 'a' && *str <= 'z'))
-			rot13_table = rot13_table_lower;
-		else if ((*str >= 'A' && *str <= 'Z'))
-			rot13_table = rot13_table_upper;
-		else
+		for (j = 0; input[j]; j++)
 		{
-			str++;
-			continue;
+			if (s[i] == input[j])
+			{
+				s[i] = output[j];
+				break;
+			}
 		}
-		*str = rot13_table[*str - 'a'];
-		str++;
 	}
-	return (start);
+	return (s);
 }
-
