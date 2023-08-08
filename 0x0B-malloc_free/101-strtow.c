@@ -1,89 +1,75 @@
-#include "main.h"
 #include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include "main.h"
 
 /**
- * is_whitespace - Checks if a character is a whitespace character.
- * @c: The character to check.
+ * count_word - counts the number of words
+ * @s: The string to be analysed
  *
- * Return: 1 if the character is whitespace, 0 otherwise.
+ * Return: Word count
  */
-int is_whitespace(char c)
+int count_word(char *s)
 {
-	return (c == ' ' || c == '\t' || c == '\n');
-}
+	int a, b, flag;
 
-/**
- * count_words - Counts the number of words in a string.
- * @str: The input string.
- *
- * Return: The number of words in the string.
- */
-int count_words(char *str)
-{
-	int word_count = 0;
-	int in_word = 0;
+	b = 0;
+	flag = 0;
 
-	while (*str)
+	for (a = 0; s[a] != '\0'; a++)
 	{
-		if (is_whitespace(*str))
+		if (s[a] == ' ')
+			flag = 0;
+		else if (flag == 0)
 		{
-			in_word = 0;
+			flag = 1;
+			b++;
 		}
-		else if (!in_word)
-		{
-			in_word = 1;
-			word_count++;
-		}
-		str++;
 	}
-	return (word_count);
+	return (b);
 }
 
 /**
- * strtow - Splits a string into words.
- * @str: The input string.
+ * **strtow - Will split a string in to words
+ * @str: The string to be split
  *
- * Return: A pointer to an array of strings (words), or NULL on failure.
+ * Return: The pointer to an array of strings otherwise NULL
  */
 char **strtow(char *str)
 {
-	if (str == NULL || *str == '\0')
-	{
-		return (NULL);
-	}
-	int num_words = count_words(str);
-	char **words = (char **)malloc((num_words + 1) * sizeof(char *));
+	char *tmp, **mtx;
+	int x, y = 0, a = 0, len = 0, words, start, stop;
 
-	if (words == NULL)
-	{
+	while (*(str + len))
+		len++;
+	words = count_word(str);
+	if (words == 0)
 		return (NULL);
-	}
-	int word_index = 0;
-	int word_length = 0;
-	int in_word = 0;
 
-	for (int i = 0; str[i]; i++)
+	mtx = (char **) malloc(sizeof(char *) * (words + 1));
+	if (mtx == NULL)
+		return (NULL);
+
+	for (x = 0; x <= len; x++)
 	{
-		if (!is_whitespace(str[i]))
+		if (str[x] == ' ' || str[x] == '\0')
 		{
-			if (!in_word)
+			if (a)
 			{
-				in_word = 1;
-				word_length = 0;
-				words[word_index] = &str[i];
-				word_index++;
+				stop = x;
+				tmp = (char *) malloc(sizeof(char) * (a + 1));
+				if (tmp == NULL)
+					return (NULL);
+				while (start < stop)
+					*tmp++ = str[start++];
+				*tmp = '\0';
+				mtx[y] = tmp - a;
+				y++;
+				a = 0;
 			}
-			word_length++;
 		}
-		else
-		{
-			in_word = 0;
-			str[i] = '\0';
-		}
+		else if (a++ == 0)
+			start = x;
 	}
-	words[num_words] = NULL;
-	return (words);
-}
+	mtx[y] = NULL;
 
+	return (mtx);
+}
