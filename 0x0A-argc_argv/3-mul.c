@@ -1,26 +1,24 @@
+#include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
+
 /**
- * main - program to print multiple of twp numbers
- * @argc: Argument count
- * @argv: Argument vector
- * Return: always return 0.
+ * main - print product of two numbers
+ * @argc: number of arguments
+ * @argv: array of arguments
+ * Return: (0)
  */
+
 int main(int argc, char *argv[])
 {
-	int num1, num2, mul;
-
-	if (argc != 3)
+	if (argc <= 2 || argc > 3)
 	{
-		printf("Error \n");
-		return (0);
+		printf("Error\n");
+		return (1);
 	}
 	else
 	{
-		num1 = atoi(argv[1]);
-		num2 = atoi(argv[2]);
-		mul = num1 * num2;
-		printf("%d\n", mul);
+		printf("%d\n", atoi(argv[1]) * atoi(argv[2]));
+		return (0);
 	}
-	return (0);
 }
