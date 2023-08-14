@@ -1,11 +1,14 @@
 #include <stdio.h>
 /**
- * Main - Entery point to the program
- * @void: the paramiter to return
- * Return: Always return 0
+ * main - Entry point of the program
+ *
+ * Description: This function prints the name of the source file
+ * from which it was compiled, followed by a new line.
+ *
+ * Return: Always 0 (Success)
  */
 int main(void)
 {
-	printf(" compiled from file: %s\n", __FILE__);
+	printf("%s\n", __FILE__);
 	return (0);
 }
