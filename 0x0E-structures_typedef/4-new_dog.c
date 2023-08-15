@@ -1,48 +1,75 @@
+#include "dog.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include "dog.h"
+
 /**
- * new_dog - Creates a new dog
- * @name: Name of the dog
- * @age: Age of the dog
- * @owner: Owner of the dog
- *
- * Description: This function creates a new dog with the provided name,
- *              age, and owner. It allocates memory for the dog structure
- * and copies the name and owner strings.
- *
- * Return: Pointer to the newly created dog, or NULL if allocation fails
+ * _strdup - returns a pointer to a newly allocated space in memory
+ * @str: string
+ * Return: pointer to newly allocated space in memory
+ */
+
+char *_strdup(char *str)
+{
+	int length, i;
+	char *arr;
+
+	if (str == NULL)
+	{
+		return (NULL);
+	}
+
+	length = 0;
+	while (*(str + length) != '\0')
+	{
+		length++;
+	}
+
+	arr = (char*) malloc(length * sizeof(char) + 1);
+	if (arr == NULL)
+		return (NULL);
+
+	for (i = 0; i < length; i++)
+	{
+		arr[i] = str[i];
+	}
+	arr[i] = '\0';
+
+	return (arr);
+}
+
+/**
+ * new_dog - creates a new dog
+ * @name: doggo's name
+ * @age: doggo's age
+ * @owner: doggo's owner
+ * Return: new_dog (dog_t)
  */
 
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	dog_t *newDog;
+	dog_t *doggo;
+	char *doggo_name, *doggo_owner;
 
-	if (name == NULL || owner == NULL)
-	{
+	doggo = malloc(sizeof(dog_t));
+	if (doggo == NULL)
 		return (NULL);
-	}
-	newDog = malloc(sizeof(dog_t));
 
-	if (newDog == NULL)
+	doggo_name = _strdup(name);
+	if (doggo_name == NULL)
 	{
+		free(doggo);
 		return (NULL);
 	}
-	newDog->name = strdup(name);
-	if (newDog->name == NULL)
+
+	doggo_owner = _strdup(owner);
+	if (doggo_owner == NULL)
 	{
-		free(newDog);
+		free(doggo_name);
+		free(doggo);
 		return (NULL);
 	}
-	newDog->age = age;
-	newDog->owner = strdup(owner);
-	if (newDog->owner == NULL)
-	{
-		free(newDog->name);
-		free(newDog);
-		return (NULL);
-	}
-	return (newDog);
+	doggo->name = doggo_name;
+	doggo->age = age;
+	doggo->owner = doggo_owner;
+	return (doggo);
 }
-
