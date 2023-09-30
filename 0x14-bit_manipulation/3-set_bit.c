@@ -1,4 +1,4 @@
-i#include "main.h"
+#include "main.h"
 /**
  * set_bit - function that sets the value of bit to 1
  * @n: number
