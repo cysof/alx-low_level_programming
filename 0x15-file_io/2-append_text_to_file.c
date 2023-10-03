@@ -1,9 +1,11 @@
 #include "main.h"
+
 /**
- * _strlen - return length
+ * _strlen - returns length of string
  * @s: string
  * Return: length of string
  */
+
 int _strlen(char *s)
 {
 	int len = 0;
@@ -12,23 +14,26 @@ int _strlen(char *s)
 	{
 		len++;
 	}
+
 	return (len);
 }
 
+
 /**
- * append_text_to_file - function to write text
- * @filename: filename
- * @text_content: yext content
- * Return: return 1
+ * append_text_to_file - appends a text at the end of a file
+ * @filename: name of file
+ * @text_content: text
+ * Return: 1 - success, -1 error
  */
+
 int append_text_to_file(const char *filename, char *text_content)
 {
 	int fd;
 	unsigned int length;
-	ssize_t bytes_wt;
+	ssize_t bytes_written;
 
 	if (filename == NULL)
-		return (0);
+		return (-1);
 	if (text_content == NULL)
 		return (1);
 	fd = open(filename, O_WRONLY | O_APPEND);
@@ -36,8 +41,8 @@ int append_text_to_file(const char *filename, char *text_content)
 		return (-1);
 	length = _strlen(text_content);
 
-	bytes_wt = write(fd, text_content, length);
-	if (bytes_wt == -1)
+	bytes_written = write(fd, text_content, length);
+	if (bytes_written == -1)
 		return (-1);
 	close(fd);
 	return (1);
